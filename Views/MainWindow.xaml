@@ -1,0 +1,60 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:AvaloniaApplication10.ViewModels;assembly=AvaloniaApplication10"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:rxui="clr-namespace:Avalonia.ReactiveUI;assembly=Avalonia.ReactiveUI"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="AvaloniaApplication10.Views.MainWindow"
+        Title="AvaloniaApplication10">
+
+  <!--<Design.DataContext>
+      <vm:MainWindowViewModel/>
+  </Design.DataContext>-->
+  
+  <Window.Styles>
+    <Style Selector="Expander.hamburger">
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Background="{TemplateBinding Background}">
+            <ContentPresenter Name="PART_ContentPresenter"
+                            IsVisible="{TemplateBinding IsExpanded}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Content="{TemplateBinding Content}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Padding="{TemplateBinding Padding}" />
+          </Border>
+        </ControlTemplate>
+      </Setter>
+
+      <!--slide the panel in from the left-->
+      <Setter Property="ContentTransition">
+        <Setter.Value>
+          <PageSlide Orientation="Horizontal" Duration="0:0:0.25"/>
+        </Setter.Value>
+      </Setter>
+      <Setter Property="ExpandDirection" Value="Right"/>
+    </Style>
+  </Window.Styles>
+
+  <Grid RowDefinitions="Auto,*" ColumnDefinitions="350,*">
+    <Panel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="Azure">
+      <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
+        <ToggleButton Command="{Binding Toggle}" Content="Show"/>
+        <ToggleButton Command="{Binding Delay}" Content="Delay"/>
+      </StackPanel>
+    </Panel>
+    
+    <rxui:RoutedViewHost Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Router="{Binding Router}">
+      <rxui:RoutedViewHost.DefaultContent>
+        <TextBlock Text="Default content" HorizontalAlignment="Center" VerticalAlignment="Center" />
+      </rxui:RoutedViewHost.DefaultContent>
+    </rxui:RoutedViewHost>
+
+    <Expander Grid.Row="1" Grid.Column="0" IsExpanded="{Binding ShowMaster}" Classes="hamburger">
+      <Panel Background="Red"/>
+    </Expander>
+  </Grid>
+
+</Window>
